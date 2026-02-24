@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Presença - Bruno & Maria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { gold: '#a8905b', dark: '#2d2d2d' },
+                    fontFamily: { serif: ['"Cormorant Garamond"', 'serif'], sans: ['"Montserrat"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scale-in { animation: scaleIn 0.3s ease-out; }
+        @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .tracking-widest-extra { letter-spacing: 0.2em; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+
+<body class="text-dark bg-stone-50 min-h-screen flex flex-col font-sans selection:bg-gold selection:text-white">
+
+    <header class="py-16 px-4 text-center bg-white border-b border-gray-100 shadow-sm sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto">
+            <i data-lucide="mail-open" class="w-8 h-8 mx-auto text-gold mb-4 stroke-[1.5]"></i>
+            <h1 class="text-4xl md:text-6xl font-serif text-dark mb-4 tracking-tight">R.S.V.P.</h1>
+            <div class="w-24 h-px bg-gold mx-auto mb-4"></div>
+            <p class="text-gray-400 uppercase tracking-widest-extra text-[10px] md:text-xs">Confirme a sua presença</p>
+        </div>
+    </header>
+
+    <div id="status-banner" class="hidden"></div>
+
+    <main class="flex-grow max-w-xl mx-auto px-4 py-16 w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div class="bg-white p-10 md:p-12 shadow-xl border-t-4 border-gold rounded-sm">
+            <p class="text-center font-serif text-xl mb-10 italic text-gray-500">
+                "A sua presença é indispensável para completarmos a nossa alegria."
+            </p>
+
+            <form id="rsvp-form" onsubmit="event.preventDefault(); window.appController.handleRSVPSubmit()">
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Nome Completo</label>
+                        <input id="rsvp-name" type="text" placeholder="Nome e Sobrenome" class="w-full border-b border-gray-200 focus:border-dark outline-none py-3 transition-colors bg-transparent text-lg font-serif" required>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Telefone / WhatsApp</label>
+                        <input id="rsvp-phone" type="tel" placeholder="(XX) 99999-9999" class="w-full border-b border-gray-200 focus:border-dark outline-none py-3 transition-colors bg-transparent text-lg font-serif" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Adultos</label>
+                            <input id="rsvp-adults" type="number" min="1" value="1" class="w-full border-b border-gray-200 focus:border-dark outline-none py-3 transition-colors bg-transparent text-lg font-serif text-center" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Crianças</label>
+                            <input id="rsvp-kids" type="number" min="0" value="0" class="w-full border-b border-gray-200 focus:border-dark outline-none py-3 transition-colors bg-transparent text-lg font-serif text-center">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Mensagem aos Noivos</label>
+                        <textarea id="rsvp-message" rows="3" placeholder="Deixe uma mensagem..." class="w-full border-b border-gray-200 focus:border-dark outline-none py-3 transition-colors resize-none bg-transparent font-serif text-lg"></textarea>
+                    </div>
+                    <button type="submit" id="btn-rsvp-submit" class="w-full py-5 bg-dark text-white text-[10px] uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg mt-4 rounded-sm">
+                        Confirmar Presença
+                    </button>
+                </div>
+            </form>
+
+            <div id="rsvp-success" class="hidden text-center py-10 animate-in zoom-in">
+                <div class="w-16 h-16 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-6 text-gold border border-stone-100"><i data-lucide="check" class="w-8 h-8"></i></div>
+                <h3 class="text-3xl font-serif text-dark mb-4">Confirmado!</h3>
+                <p class="text-gray-500 text-sm mb-8">Obrigado por fazeres parte deste dia.</p>
+                <a href="index.html" class="text-[10px] uppercase tracking-widest border-b border-dark pb-1 hover:text-gray-600">Voltar ao Início</a>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="index.html" class="text-[10px] uppercase tracking-widest text-gray-400 hover:text-dark border-b border-transparent hover:border-dark pb-1 transition-all">&larr; Voltar ao Convite</a>
+        </div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+    <script>window.addEventListener('load', () => lucide.createIcons());</script>
+</body>
+</html>
